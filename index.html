@@ -4,6 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ARCHIVE — 追星紀錄總覽</title>
+<meta name="theme-color" content="#f4f2ec">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ARCHIVE">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<script>
+  // 在畫面繪製前就決定主題：手動選擇 > 系統設定
+  (function(){
+    var t=null;
+    try{ t=localStorage.getItem('archive-theme'); }catch(e){}
+    if(t!=='light' && t!=='dark'){
+      t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+    var m=document.querySelector('meta[name="theme-color"]');
+    if(m) m.setAttribute('content', t==='dark' ? '#17150f' : '#f4f2ec');
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
@@ -57,6 +78,11 @@
   .entry .meta{display:flex; flex-wrap:wrap; gap:4px 16px; margin-top:4px; font-size:12px; font-weight:500; color:var(--ink-faint); transition:transform .18s;}
   .entry .meta:empty{display:none;}
   .entry .meta b{font-weight:700; color:var(--ink-dim);}
+  .new-badge{
+    display:inline-block; vertical-align:middle; margin-left:10px; padding:1px 7px;
+    font-family:var(--maru); font-size:10px; font-weight:700; letter-spacing:0.14em; line-height:1.6;
+    background:var(--accent); color:var(--paper); border-radius:2px;
+  }
   .entry .arrow{
     font-size:22px; color:var(--ink-faint); flex:0 0 auto;
     transition:transform .18s, color .18s;
@@ -74,13 +100,20 @@
   .entry:hover .arrow, .entry:focus-visible .arrow{transform:translateX(8px); color:var(--accent);}
   .entry:focus-visible{outline:2px solid var(--accent); outline-offset:-2px;}
 
+  .theme-toggle{
+    font:inherit; letter-spacing:inherit; color:var(--ink-dim); background:none;
+    border:1px solid var(--line-strong); padding:2px 10px; margin-left:10px; cursor:pointer;
+    transition:background-color .18s, color .18s;
+  }
+  .theme-toggle:hover{background:var(--ink); color:var(--paper);}
+  .theme-toggle:focus-visible{outline:2px solid var(--ink); outline-offset:2px;}
+
   footer{font-size:12px; letter-spacing:0.08em; color:var(--ink-dim); text-align:center; margin-top:auto; padding-top:clamp(16px,3vh,40px);}
 
   @media (max-width:520px){
     .wrap{padding:0 20px;}
     .entry{gap:14px; padding:14px 10px; margin:0 -10px;}
     .entry .mark{flex-basis:22px; width:22px; height:22px;}
-    .entry .desc{font-size:14px;}
   }
   @media (max-height:720px) and (min-width:521px){
     .entry .meta, .hero p{display:none;}
@@ -108,54 +141,83 @@
   <nav class="index">
     <a class="entry" data-x="diary" href="https://yician0830.github.io/mystar-/">
       <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18M12.5 8h3M12.5 12h3"/></svg>
-      <span class="body">
+      <div class="body">
         <div class="title">推し手帳</div>
         <div class="desc">行程、記帳、應援與小卡——追星生活的每日記事本</div>
         <div class="meta" data-meta="diary"></div>
-      </span>
+      </div>
       <span class="arrow">→</span>
     </a>
 
     <a class="entry" data-x="drama" href="https://yician0830.github.io/mystar-/drama/">
       <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4M10.5 9.5l4 2.5-4 2.5z"/></svg>
-      <span class="body">
+      <div class="body">
         <div class="title">追劇紀錄</div>
         <div class="desc">進度、心得與評分——正在追的每一部劇</div>
         <div class="meta" data-meta="drama"></div>
-      </span>
+      </div>
       <span class="arrow">→</span>
     </a>
 
     <a class="entry" data-x="photo" href="https://yician0830.github.io/mytourdiary/">
       <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-      <span class="body">
+      <div class="body">
         <div class="title">_CHEMERA_ DIARY</div>
         <div class="desc">舞台、機場、見面會——巡演拍攝場次總覽相簿</div>
         <div class="meta" data-meta="photo"></div>
-      </span>
+      </div>
       <span class="arrow">→</span>
     </a>
 
     <a class="entry" data-x="travel" href="https://yician0830.github.io/mystar-/travel/">
       <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M8 11v5M16 11v5"/></svg>
-      <span class="body">
+      <div class="body">
         <div class="title">旅遊紀錄</div>
         <div class="desc">航班、住宿與行程——平常出遊與追星遠征都記在這裡</div>
         <div class="meta" data-meta="travel"></div>
-      </span>
+      </div>
       <span class="arrow">→</span>
     </a>
   </nav>
 
-  <footer>最後更新 <span id="todayTag"></span></footer>
+  <footer>最後更新 <span id="todayTag"></span><button type="button" class="theme-toggle" id="themeToggle"></button></footer>
 </div>
 
 <script>
+  // 深淺色三段切換：跟隨系統 → 淺色 → 深色 → 跟隨系統
+  // 選擇記在 localStorage（'light' / 'dark'；跟隨系統則不存），跟隨系統時會即時隨系統變化
   (function(){
-    try{
-      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if(prefersDark) document.documentElement.setAttribute('data-theme','dark');
-    }catch(e){}
+    var root=document.documentElement, btn=document.getElementById('themeToggle');
+    var mq=window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+    var MODES=['auto','light','dark'];
+    var LABEL={auto:'◐ 跟隨系統', light:'☀ 淺色', dark:'☾ 深色'};
+    var NAME={auto:'跟隨系統', light:'淺色', dark:'深色'};
+    function saved(){
+      try{ var v=localStorage.getItem('archive-theme'); return (v==='light'||v==='dark') ? v : 'auto'; }
+      catch(e){ return 'auto'; }
+    }
+    var mode=saved();
+    function apply(){
+      var t = mode==='auto' ? ((mq && mq.matches) ? 'dark' : 'light') : mode;
+      root.setAttribute('data-theme',t);
+      var tc=document.querySelector('meta[name="theme-color"]');
+      if(tc) tc.setAttribute('content', t==='dark' ? '#17150f' : '#f4f2ec');
+      btn.textContent=LABEL[mode];
+      btn.setAttribute('aria-label','主題：'+NAME[mode]+'，點擊切換');
+    }
+    apply();
+    btn.addEventListener('click',function(){
+      mode=MODES[(MODES.indexOf(mode)+1)%MODES.length];
+      try{
+        if(mode==='auto') localStorage.removeItem('archive-theme');
+        else localStorage.setItem('archive-theme',mode);
+      }catch(e){}
+      apply();
+    });
+    if(mq){
+      var onChange=function(){ if(mode==='auto') apply(); };
+      if(mq.addEventListener) mq.addEventListener('change',onChange); else if(mq.addListener) mq.addListener(onChange);
+    }
   })();
   // 手動更新這個日期（格式 YYYY.MM.DD），頁尾就會顯示真正的最後更新日
   var LAST_UPDATED = '2026.09.30';
@@ -171,24 +233,82 @@
     var el = document.querySelector('[data-meta="'+k+'"]'), m = META[k];
     if(!el) return;
     var h = '';
-    if(m.updated) h += '<span>最近更新 <b>'+m.updated+'</b></span>';
+    if(m.updated) h += '<span title="'+m.updated+'">最近更新 <b>'+relTime(m.updated)+'</b></span>';
     el.innerHTML = h;
+    setBadge(k);
   }
-  Object.keys(META).forEach(function(k){
-    renderMeta(k);
-    // 同一個網域（yician0830.github.io），fetch 不會有跨域問題
-    fetch(META[k].url, {cache:'no-cache'})
+  // NEW 徽章：updated 在 NEW_DAYS 天內就顯示在標題旁
+  var NEW_DAYS = 3;
+  // 距今幾天（以日期計算，今天 = 0）；格式無法解析則回傳 null
+  function daysAgo(v){
+    var n = normDate(v);
+    if(!n) return null;
+    var p = n.split('.'), now = new Date();
+    return Math.round((new Date(now.getFullYear(), now.getMonth(), now.getDate()) - new Date(+p[0], +p[1]-1, +p[2])) / 86400000);
+  }
+  function isRecent(v){
+    var d = daysAgo(v);
+    return d !== null && d <= NEW_DAYS && d >= -1;
+  }
+  // 相對時間：今天 / 昨天 / N 天前；超過兩週（14 天）改顯示日期
+  function relTime(v){
+    var d = daysAgo(v);
+    if(d === null) return v;
+    if(d <= 0) return '今天';
+    if(d === 1) return '昨天';
+    if(d <= 14) return d + ' 天前';
+    return normDate(v);
+  }
+  function setBadge(k){
+    var entry = document.querySelector('.entry[data-x="'+k+'"]');
+    if(!entry) return;
+    var title = entry.querySelector('.title'), old = title.querySelector('.new-badge');
+    if(isRecent(META[k].updated)){
+      if(!old){
+        var b = document.createElement('span');
+        b.className = 'new-badge';
+        b.textContent = 'NEW';
+        b.setAttribute('title', '最近 ' + NEW_DAYS + ' 天內有更新');
+        title.appendChild(b);
+      }
+    }else if(old){
+      old.remove();
+    }
+  }
+  // 讀取某一本的 meta.json。同一個網域（yician0830.github.io），fetch 不會有跨域問題
+  function loadMeta(k){
+    return fetch(META[k].url, {cache:'no-cache'})
       .then(function(r){ if(!r.ok) throw 0; return r.json(); })
       .then(function(j){
         if(j.updated != null) META[k].updated = String(j.updated);
         renderMeta(k);
+        refreshStamp();
       })
       .catch(function(){});
-  });
-  var d = new Date();
-  var y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0');
-  document.getElementById('issueTag').textContent = 'VOL. ' + y + '.' + m;
-  document.getElementById('todayTag').textContent = LAST_UPDATED;
+  }
+  function loadAll(){ Object.keys(META).forEach(loadMeta); }
+  Object.keys(META).forEach(renderMeta);
+  loadAll();
+  // 不用手動重新整理：每 60 秒重讀一次（分頁在背景時略過），切回分頁時也立刻重讀
+  setInterval(function(){ if(!document.hidden) loadAll(); }, 60000);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) loadAll(); });
+  // 頁尾日期 = 四本 meta.json 裡最新的 updated 與 LAST_UPDATED 取較晚者；
+  // 期號（VOL.）用當月（開頁面當下的年.月）
+  function normDate(v){
+    var m = /^(\d{4})[.\-\/](\d{1,2})[.\-\/](\d{1,2})$/.exec(String(v||'').trim());
+    return m ? m[1]+'.'+('0'+m[2]).slice(-2)+'.'+('0'+m[3]).slice(-2) : '';
+  }
+  function refreshStamp(){
+    var latest = normDate(LAST_UPDATED);
+    Object.keys(META).forEach(function(k){
+      var n = normDate(META[k].updated);
+      if(n && n > latest) latest = n;
+    });
+    var now = new Date();
+    document.getElementById('issueTag').textContent = 'VOL. ' + now.getFullYear() + '.' + ('0'+(now.getMonth()+1)).slice(-2);
+    document.getElementById('todayTag').textContent = latest;
+  }
+  refreshStamp();
 </script>
 </body>
 </html>

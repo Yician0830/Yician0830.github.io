@@ -1,0 +1,16 @@
+{
+  "name": "ARCHIVE — 追星紀錄總覽",
+  "short_name": "ARCHIVE",
+  "description": "手帳、劇單、快門與旅程，四本各自的日記，收在同一個封面底下。",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f2ec",
+  "theme_color": "#f4f2ec",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
